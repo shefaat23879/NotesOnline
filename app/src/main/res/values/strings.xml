@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SimpleNoteOnline</string>
+    <string name="sign_in">sign_in</string>
+    <string name="Register">Register</string>
+</resources>
