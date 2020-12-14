@@ -29,10 +29,19 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:20.0.1'
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'com.google.android.material:material:1.2.0-alpha30'
-
+    implementation 'com.google.android.material:material:1.3.0-alpha04'
+    implementation 'com.google.android.material:material:1.2.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview-selection:1.1.0-rc03'
+
+    //Persian Date
+    implementation 'com.github.samanzamani.persiandate:PersianDate:0.8'
+
+    //Material
+    implementation 'com.google.android.material:material:1.2.1'
+
 }

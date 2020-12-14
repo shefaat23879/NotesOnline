@@ -2,27 +2,47 @@ package com.example.simplenoteonline;
 
 public class NoteModel {
 
-    public String noteTitle;
-    public String noteTime;
+    public String title;
+    public String content;
+    public Long timestamp;
 
-    public NoteModel(String noteTitle,String noteTime){
-        this.noteTitle=noteTitle;
-        this.noteTime=noteTime;
+
+
+    NoteModel() {
     }
 
-    public String getNoteTitle() {
-        return noteTitle;
+    public NoteModel(String title, Long timestamp) {
+        this.title = title;
+        this.timestamp = timestamp;
     }
 
-    public void setNoteTitle(String noteTitle) {
-        this.noteTitle = noteTitle;
+    public NoteModel(String noteTitle, String noteTime , Long timestamp) {
+        this.title = noteTitle;
+        this.content = noteTime;
+        this.timestamp = timestamp;
     }
 
-    public String getNoteTime() {
-        return noteTime;
+    public String getTitle() {
+        return title;
     }
 
-    public void setNoteTime(String noteTime) {
-        this.noteTime = noteTime;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 }

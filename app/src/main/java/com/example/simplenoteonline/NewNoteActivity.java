@@ -2,7 +2,6 @@ package com.example.simplenoteonline;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -59,9 +58,10 @@ public class NewNoteActivity extends AppCompatActivity {
         if(fAuth.getCurrentUser()!=null){
             final DatabaseReference newNoteRef=fNotesDatabase.push();
             final Map noteMap=new HashMap();
+            Long time = System.currentTimeMillis();
             noteMap.put("title",title);
             noteMap.put("content",content);
-            noteMap.put("timestamp", ServerValue.TIMESTAMP);
+            noteMap.put("timestamp", time);
 
             Thread mainThread=new Thread(new Runnable() {
                 @Override
