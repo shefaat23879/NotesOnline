@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.service.autofill.OnClickAction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,11 +30,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteItemClickListener {
 
     List<NoteModel> noteModels;
     RecyclerView recyclerView;
     NoteAdapter noteAdapter;
+
+
 
     private FirebaseAuth fAuth;
 
@@ -44,24 +49,40 @@ public class MainActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
 
+
         recyclerView = findViewById(R.id.main_notes_list);
         recyclerView.setLayoutManager(new GridLayoutManager(this , 2));
         noteModels = new ArrayList<>();
-        noteAdapter = new NoteAdapter(noteModels ,getApplicationContext());
+        noteAdapter = new NoteAdapter(noteModels ,this , this);
         recyclerView.setAdapter(noteAdapter);
+
+
+
 
         fNotesDatabase = FirebaseDatabase.getInstance().getReference("Notes").child(fAuth.getCurrentUser().getUid());
 
         noteModels.clear();
+
         fNotesDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String title = Objects.requireNonNull(snapshot.child("title").getValue()).toString();
                 Long timestamp =(Long) snapshot.child("timestamp").getValue();
-                NoteModel note = new NoteModel(title, timestamp);
+                String content =Objects.requireNonNull(snapshot.child("content").getValue().toString());
+                NoteModel note = new NoteModel(title , content , timestamp);
                 noteModels.add(note);
                 noteAdapter.notifyDataSetChanged();
+
+
+
+
+
+
+
+
+
             }
+
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -71,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
-            }
+
+        }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -145,4 +167,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onNoteClick(NoteModel noteModel) {
+        Intent intent = new Intent(MainActivity.this , ShowNoteActivity.class);
+        intent.putExtra("Title" , noteModel.getTitle());
+        intent.putExtra("Content" , noteModel.getContent());
+        intent.putExtra("Timestamp" , noteModel.getTimestamp().toString());
+        startActivity(intent);
+    }
 }

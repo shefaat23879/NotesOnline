@@ -11,14 +11,10 @@ public class NoteModel {
     NoteModel() {
     }
 
-    public NoteModel(String title, Long timestamp) {
-        this.title = title;
-        this.timestamp = timestamp;
-    }
 
-    public NoteModel(String noteTitle, String noteTime , Long timestamp) {
+    public NoteModel(String noteTitle, String noteContent , Long timestamp) {
         this.title = noteTitle;
-        this.content = noteTime;
+        this.content = noteContent;
         this.timestamp = timestamp;
     }
 
