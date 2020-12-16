@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +34,7 @@ import saman.zamani.persiandate.PersianDate;
 
 public class ShowNoteActivity extends AppCompatActivity {
 
-    private Button btnCreate , btnDelete;
+    private Button btnCreate , btnDelete , btnEdit;
     private EditText etTitle, etContent;
     private FirebaseAuth fAuth;
     private DatabaseReference fNotesDatabase;
@@ -52,6 +53,7 @@ public class ShowNoteActivity extends AppCompatActivity {
         etTitle = findViewById(R.id.new_notee_title);
         etContent = findViewById(R.id.new_notee_content);
         btnDelete = findViewById(R.id.delete_note_btn);
+        btnEdit = findViewById(R.id.edit_note_btn);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +62,12 @@ public class ShowNoteActivity extends AppCompatActivity {
             }
         });
 
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editNote();
+            }
+        });
 
         noteModel = new NoteModel(getIntent().getStringExtra("Title"),
                 getIntent().getStringExtra("Content"),
@@ -67,6 +75,42 @@ public class ShowNoteActivity extends AppCompatActivity {
 
         etTitle.setText(noteModel.getTitle());
         etContent.setText(noteModel.getContent());
+    }
+
+    private void editNote() {
+        String title = etTitle.getText().toString().trim();
+        String content = etContent.getText().toString().trim();
+
+        if(TextUtils.isEmpty(title) || TextUtils.isEmpty(content)){
+            Toast.makeText(this, "Please Enter Note", Toast.LENGTH_SHORT).show();
+        }else {
+
+            final Map updateMap = new HashMap();
+            Long time = System.currentTimeMillis();
+            updateMap.put("title", title);
+            updateMap.put("content", content);
+            updateMap.put("timestamp", time);
+
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            Query noteQuery = ref.child("Notes").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                    .orderByChild("timestamp").equalTo(noteModel.getTimestamp());
+
+            noteQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        snapshot.getRef().setValue(updateMap);
+
+                    }
+                    Toast.makeText(ShowNoteActivity.this, "Update Note", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("NoteAdapter", "onCancelledUpdateNote", databaseError.toException());
+                }
+            });
+        }
     }
 
     private void deleteNote() {
@@ -81,7 +125,7 @@ public class ShowNoteActivity extends AppCompatActivity {
                     snapshot.getRef().removeValue();
 
                 }
-                //back to home fragment
+                //back to main activity
                 startActivity(new Intent(ShowNoteActivity.this, MainActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 finish();
@@ -94,5 +138,12 @@ public class ShowNoteActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //back to home activity
+        startActivity(new Intent(ShowNoteActivity.this, MainActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        finish();
+    }
 }

@@ -169,11 +169,13 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
 
     @Override
     public void onNoteClick(NoteModel noteModel) {
-        Intent intent = new Intent(MainActivity.this , ShowNoteActivity.class);
+        Intent intent = new Intent(MainActivity.this , ShowNoteActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("Title" , noteModel.getTitle());
         intent.putExtra("Content" , noteModel.getContent());
         intent.putExtra("Timestamp" , noteModel.getTimestamp().toString());
         startActivity(intent);
+        finish();
     }
 
 
