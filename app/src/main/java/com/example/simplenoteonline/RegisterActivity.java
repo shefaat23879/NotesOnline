@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        Intent mainIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                                         startActivity(mainIntent);
                                         finish();
                                         Toast.makeText(RegisterActivity.this, "user created!", Toast.LENGTH_SHORT).show();

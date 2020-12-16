@@ -78,17 +78,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
         if (fAuth.getCurrentUser() != null) {
 
-            if (isExist) {
-                //UAPDATE A NOTE
-                Map updateMap = new HashMap();
-                Long time = System.currentTimeMillis();
-                updateMap.put("title", etTitle.getText().toString().trim());
-                updateMap.put("content", etContent.getText().toString().trim());
-                updateMap.put("timestamp", time);
 
-                fNotesDatabase.child(noteID).updateChildren(updateMap);
-                Toast.makeText(this, "Note update", Toast.LENGTH_SHORT).show();
-            } else {
                 //CREATE NEW NOTE
                 final DatabaseReference newNoteRef = fNotesDatabase.push();
                 final Map noteMap = new HashMap();
@@ -118,10 +108,7 @@ public class NewNoteActivity extends AppCompatActivity {
             }
 
 
-        } else {
-            Toast.makeText(this, "USER IS NOT SIGNED IN", Toast.LENGTH_SHORT).show();
-        }
-    }
+         }
 
 
 }

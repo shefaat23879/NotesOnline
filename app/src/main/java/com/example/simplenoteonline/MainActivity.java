@@ -15,7 +15,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
     List<NoteModel> noteModels;
     RecyclerView recyclerView;
     NoteAdapter noteAdapter;
+    Button btn,btn2;
 
 
 
@@ -48,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
         setContentView(R.layout.activity_main);
 
         fAuth = FirebaseAuth.getInstance();
+        fNotesDatabase = FirebaseDatabase.getInstance().getReference();
+
+        btn=findViewById(R.id.button2);
+        btn2=findViewById(R.id.button3);
 
 
         recyclerView = findViewById(R.id.main_notes_list);
@@ -56,14 +63,37 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
         noteAdapter = new NoteAdapter(noteModels ,this , this);
         recyclerView.setAdapter(noteAdapter);
 
+        getAllNote();
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fAuth.getCurrentUser() != null) {
+                     fAuth.signOut();
+                     Toast.makeText(MainActivity.this, "Sign out!" , Toast.LENGTH_SHORT).show();
+                     finish();
+                }
+            }
+        });
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(MainActivity.this, NewNoteActivity.class);
+                startActivity(newIntent);
+            }
+        });
 
 
+        if (fAuth.getCurrentUser() != null) {
+            fNotesDatabase = FirebaseDatabase.getInstance().getReference().child("Notes").child(fAuth.getCurrentUser().getUid());
+        }
+        updateUI();
+    }
 
-        fNotesDatabase = FirebaseDatabase.getInstance().getReference("Notes").child(fAuth.getCurrentUser().getUid());
-
+    private void getAllNote() {
         noteModels.clear();
-
-        fNotesDatabase.addChildEventListener(new ChildEventListener() {
+        fNotesDatabase.child("Notes").child(fAuth.getCurrentUser().getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String title = Objects.requireNonNull(snapshot.child("title").getValue()).toString();
@@ -72,15 +102,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
                 NoteModel note = new NoteModel(title , content , timestamp);
                 noteModels.add(note);
                 noteAdapter.notifyDataSetChanged();
-
-
-
-
-
-
-
-
-
             }
 
 
@@ -105,32 +126,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
 
             }
         });
-
-//        fNotesDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot ds : snapshot.getChildren()) {
-//                    NoteModel data = ds.getValue(NoteModel.class);
-//                    noteModels.add(data);
-//
-//                }
-//                noteAdapter = new NoteAdapter(noteModels, getApplicationContext());
-//                recyclerView.setAdapter(noteAdapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
-
-
-
-        if (fAuth.getCurrentUser() != null) {
-            fNotesDatabase = FirebaseDatabase.getInstance().getReference().child("Notes").child(fAuth.getCurrentUser().getUid());
-        }
-        updateUI();
     }
 
 

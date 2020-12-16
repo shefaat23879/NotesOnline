@@ -65,11 +65,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if (task.isSuccessful()) {
-
+                            Toast.makeText(LoginActivity.this, "Sign in Successfull!" , Toast.LENGTH_SHORT).show();
                             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(mainIntent);
                             finish();
-                            Toast.makeText(LoginActivity.this, "Sign in Successfull!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                         } else {
                             Toast.makeText(LoginActivity.this, "ERROR:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
