@@ -69,31 +69,10 @@ public class NewNoteActivity extends AppCompatActivity {
                 }
             }
         });
-        putData();
 
     }
 
-    private void putData() {
-        if (isExist) {
-            fNotesDatabase.child(noteID).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.hasChild("title") && snapshot.hasChild("content")) {
-                        String title = snapshot.child("title").getValue().toString();
-                        String content = snapshot.child("content").getValue().toString();
 
-                        etTitle.setText(title);
-                        etContent.setText(content);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-    }
 
     private void createNote(String title, String content) {
 
@@ -145,48 +124,4 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.new_note_menu, menu);
-        mainMenu = menu;
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        super.onOptionsItemSelected(item);
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-
-            case R.id.new_note_del_btn:
-                if (!noteID.equals("no")) {
-                    deleteNote();
-                }
-                break;
-        }
-
-        return true;
-    }
-
-    private void deleteNote() {
-
-        fNotesDatabase.child(noteID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(NewNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Log.e("NewNoteActivity", task.getException().toString());
-                    Toast.makeText(NewNoteActivity.this, "ERROR" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-
-                }
-            }
-        });
-    }
 }

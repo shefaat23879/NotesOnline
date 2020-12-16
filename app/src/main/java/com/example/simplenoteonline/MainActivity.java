@@ -175,4 +175,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
         intent.putExtra("Timestamp" , noteModel.getTimestamp().toString());
         startActivity(intent);
     }
+
+
 }
