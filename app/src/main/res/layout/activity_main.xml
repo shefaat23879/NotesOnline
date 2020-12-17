@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:background="#28FFD700">
-    >
+
 
     <Button
         android:id="@+id/btn_add_note"
@@ -31,7 +31,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_notes_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="650dp" />
 
 
 </RelativeLayout>

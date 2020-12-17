@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Type your title here..."
+            android:maxLines="2"
             android:padding="10dp"
             android:background="@android:color/transparent"/>
 
@@ -31,13 +32,12 @@
         <EditText
             android:id="@+id/new_note_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:ems="10"
             android:gravity="top"
             android:hint="Type your description here..."
-            android:inputType="textImeMultiLine"
             android:padding="10dp" />
 
 

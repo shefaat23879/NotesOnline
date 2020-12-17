@@ -50,8 +50,8 @@ public class ShowNoteActivity extends AppCompatActivity {
 
 
         btnCreate = findViewById(R.id.new_note_btn);
-        etTitle = findViewById(R.id.new_notee_title);
-        etContent = findViewById(R.id.new_notee_content);
+        etTitle = findViewById(R.id.new_note_title);
+        etContent = findViewById(R.id.new_note_content);
         btnDelete = findViewById(R.id.delete_note_btn);
         btnEdit = findViewById(R.id.edit_note_btn);
 
