@@ -4,26 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#28FFD700">
+    >
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_add_note"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_marginTop="650dp"
+        android:layout_marginLeft="55dp"
+        android:backgroundTint="@color/colorButton"
+        android:text="Add Note" />
+
 
     <Button
-        android:id="@+id/button3"
-        android:layout_marginTop="150dp"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_signOut"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_marginTop="690dp"
+        android:layout_marginLeft="55dp"
+        android:backgroundTint="#FF9800"
+        android:text="Sign Out" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_notes_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
 </RelativeLayout>

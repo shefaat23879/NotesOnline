@@ -10,11 +10,14 @@
     android:focusable="true"
     android:orientation="vertical"
     app:cardCornerRadius="5dp"
-    app:contentPadding="5dp">
+    app:contentPadding="5dp"
+    app:cardBackgroundColor="@color/colorButton">
+
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="379dp"
+        android:layout_height="wrap_content"
+        android:background="#ffffc7"
         android:padding="15dp">
 
 
@@ -37,6 +40,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="12sp"
+            android:textColor="#FF9800"
             tools:text="Updated time" />
 
 

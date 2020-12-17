@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
     List<NoteModel> noteModels;
     RecyclerView recyclerView;
     NoteAdapter noteAdapter;
-    Button btn,btn2;
+    Button btnAdd,btnOut;
 
 
 
@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
         fAuth = FirebaseAuth.getInstance();
         fNotesDatabase = FirebaseDatabase.getInstance().getReference();
 
-        btn=findViewById(R.id.button2);
-        btn2=findViewById(R.id.button3);
+        btnAdd=findViewById(R.id.btn_add_note);
+        btnOut=findViewById(R.id.btn_signOut);
 
 
         recyclerView = findViewById(R.id.main_notes_list);
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
 
         getAllNote();
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+        btnOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (fAuth.getCurrentUser() != null) {
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.NoteI
             }
         });
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(MainActivity.this, NewNoteActivity.class);

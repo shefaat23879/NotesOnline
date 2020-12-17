@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
     tools:context=".RegisterActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#28FFD700">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_reg_name"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +37,9 @@
         android:id="@+id/input_reg_pass"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        >
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,4 +55,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Register"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="179dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="250dp"
+        android:src="@drawable/k" />
 </LinearLayout>
